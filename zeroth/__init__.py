@@ -1,4 +1,4 @@
-"""zeroth — Zeroth-Order PDE Solver package."""
+"""Zeroth-order PDE solver package."""
 
 from zeroth.config import load_cfg, get_default_cfg
 from zeroth.solver import ZerothOrderRunner
