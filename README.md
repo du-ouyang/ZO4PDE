@@ -1,12 +1,5 @@
 # Zeroth-Order Learning for Derivatives: Paper Examples
 
-This repository contains the clean reproduction code for the three numerical
-examples in Section 6 of the paper. It is intentionally small: generated
-results, trained checkpoints, cached files, historical trial scripts, and
-baseline output folders are not included.
-
-The only binary files kept in the repository are small fixed parameter files
-that define the paper benchmarks.
 
 ## Problem Setting
 
