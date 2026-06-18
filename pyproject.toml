@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "zeroth-order-paper-examples"
+version = "0.1.0"
+description = "Clean reproduction code for the paper's zeroth-order derivative-learning examples"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+torch = "*"
+numpy = "*"
+pandas = "*"
+matplotlib = "*"
+yacs = "*"
+typer = "*"
+
+[tool.poetry.scripts]
+zeroth = "zeroth.main:app"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

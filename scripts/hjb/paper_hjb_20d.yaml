@@ -1,0 +1,72 @@
+# Paper Section 6.2: semilinear 20D HJB/OU benchmark.
+# Run from the repository root:
+#   zeroth train scripts/hjb/paper_hjb_20d.yaml
+
+NAME: HJB_20D_paper_seed42
+FORCE: false
+
+EQUATION:
+  cls: OUProcessEquation
+  kwargs:
+    d: 20
+    alpha: 1.0
+    T: 1.0
+    theta: 1.0
+    mu: 0.0
+    num_components: 5
+    mean_scale: 1.0
+    var_scale: 2.0
+    alpha_scale: 4.0
+    mean_path: scripts/hjb/mean_20d_ms=1.0_vs=2.0_5.pt
+    var_path: scripts/hjb/var_20d_ms=1.0_vs=2.0_5.pt
+    pi_path: scripts/hjb/pi_20d_ms=1.0_vs=2.0_5.pt
+
+SOLVER:
+  N: 80
+  NUM_ITER: 10
+  NUM_TRAIN_STEPS: 512
+  TRAIN_BUDGET_SWITCH_ITER: 0
+  NUM_TRAIN_STEPS_AFTER_SWITCH: 0
+  LR_AFTER_SWITCH: 0.0
+  EPS: 0.02
+  LAMBDA_DERIV: 1.0
+  VARIANCE_REDUCTION: true
+  INITIAL_FUNCTION: network
+  PRETRAIN_DERIVATIVES: true
+  PRETRAIN_STEPS: 2000
+
+TRAIN:
+  BATCH_SIZE: 32768
+  OPTIMIZER:
+    cls: Adam
+    lr: 2.0e-3
+  SCHEDULER:
+    V_step_size: 64
+    V_gamma: 0.7
+    Grad_step_size: 64
+    Grad_gamma: 0.7
+    Hess_step_size: 64
+    Hess_gamma: 0.7
+
+NETWORK:
+  HIDDEN_SIZE: 512
+  NUM_LAYERS: 4
+  ACTIVATION: elu
+  DROPOUT: 0.0
+  INIT_SCALE: 1.0
+  VALUE_NET: pisgradnet
+  TRAIN_HESSIAN: true
+
+EVAL:
+  N_POINTS: 1000
+  FREQ: 1
+  HESS_MODE: autograd
+  ZOD_N_AVG: 16
+  ZOD_EPS: 0.02
+
+LOGGING:
+  PRINT_FREQ: 32
+
+SEED: 42
+DATA:
+  FLOAT: float32

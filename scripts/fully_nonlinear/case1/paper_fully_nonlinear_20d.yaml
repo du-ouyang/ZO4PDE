@@ -1,0 +1,67 @@
+# Paper Section 6.3: 20D fully nonlinear benchmark.
+# This is the time-matched ZOD-m setting reported in the main paper table.
+# Run from the repository root:
+#   zeroth train scripts/fully_nonlinear/case1/paper_fully_nonlinear_20d.yaml
+
+NAME: fully_nonlinear_20D_paper_seed42
+FORCE: false
+
+EQUATION:
+  cls: GBMEquationComplexExact
+  kwargs:
+    d: 20
+    alpha: 1.0
+    T: 1.0
+    num_neurons: 2
+    w_path: scripts/fully_nonlinear/case1/gbm_2nodes_w_20d.pt
+    v_path: scripts/fully_nonlinear/case1/gbm_2nodes_v_20d.pt
+
+SOLVER:
+  N: 80
+  NUM_ITER: 10
+  NUM_TRAIN_STEPS: 4096
+  TRAIN_BUDGET_SWITCH_ITER: 7
+  NUM_TRAIN_STEPS_AFTER_SWITCH: 4096
+  LR_AFTER_SWITCH: 1.0e-3
+  EPS: 0.05
+  LAMBDA_DERIV: 1.0
+  VARIANCE_REDUCTION: true
+  INITIAL_FUNCTION: network
+  PRETRAIN_DERIVATIVES: true
+  PRETRAIN_STEPS: 5000
+
+TRAIN:
+  BATCH_SIZE: 32768
+  OPTIMIZER:
+    cls: Adam
+    lr: 4.0e-3
+  SCHEDULER:
+    V_step_size: 1000
+    V_gamma: 0.5
+    Grad_step_size: 1500
+    Grad_gamma: 0.5
+    Hess_step_size: 1500
+    Hess_gamma: 0.5
+
+NETWORK:
+  HIDDEN_SIZE: 64
+  NUM_LAYERS: 3
+  ACTIVATION: elu
+  DROPOUT: 0.0
+  INIT_SCALE: 1.0
+  VALUE_NET: mlp
+  TRAIN_HESSIAN: true
+
+EVAL:
+  N_POINTS: 1000
+  FREQ: 1
+  HESS_MODE: autograd
+  ZOD_N_AVG: 16
+  ZOD_EPS: 0.02
+
+LOGGING:
+  PRINT_FREQ: 500
+
+SEED: 42
+DATA:
+  FLOAT: float32
